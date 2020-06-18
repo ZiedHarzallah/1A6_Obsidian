@@ -1,39 +1,15 @@
-#include <stdio.h>
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#include <SDL/SDL_mixer.h>
-#include <stdlib.h>
-#include <SDL/SDL_ttf.h>
-#include "enigmes.h"
+#include "game.h"
+void main()
+{
+    int volume ,i;
+    SDL_Init(SDL_INIT_VIDEO);
+    SDL_Surface *ecran=NULL;
+    Mix_Music *musique;
 
-int main()
-	{ 
-		int done=1;
-		int y ;
-		int z ;
-		SDL_Init(SDL_INIT_VIDEO);
-		SDL_Surface*screen;
-		screen=SDL_SetVideoMode(700,500,32,SDL_SWSURFACE|SDL_DOUBLEBUF);
-		SDL_Flip(screen);
-		SDL_Delay(1000);
-		SDL_Event event ;
+    ecran=SDL_SetVideoMode(1920,1080,32,SDL_HWSURFACE|SDL_DOUBLEBUF);
+    SDL_WM_SetCaption("egypte",NULL);
+    menu(ecran,musique,&i);
+    Mix_FreeMusic(musique);
+    SDL_Flip(ecran);
 
-		enigme e ;
-		enigmeData ed;
-
-		e=initEnigme();
-		if (e.back==NULL)
-			printf("vide");
-		
-		while (done)
-			{
-			SDL_BlitSurface(e.back,NULL,screen,NULL);
-			ed= generateEnigme( e);
-
-			z= randomize();
-			y=resolutionEnigme(ed,event);
-			showEnigme(ed, screen, e);
-			}
-	SDL_Quit() ;
-	return EXIT_SUCCESS ;
-	}
+}
